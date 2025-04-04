@@ -7,22 +7,112 @@
 :root {
     --cell-size: 100px;
     --mark-size: calc(var(--cell-size) * .9);
+    --grid-mv-cell-size: 40px;
 }
 
 body {
     margin: 0;
 }
 
-.board {
+.intialBoard {
     height: 100vh;
     width: 100vw;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+}
+
+
+.controls {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+
+.moveGridCntr {
+    display: none;
+}
+
+.moveGridCntr.active{
+    display: grid;
     grid-template-columns: repeat(3, auto);
 }
 
+.moveGridBtn {
+    width: var(--grid-mv-cell-size);
+    height: var(--grid-mv-cell-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    background-image: url("../caret-up-solid.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.controls button {
+    font-size: 2rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25rem, .5rem;
+    cursor: pointer;
+    margin: 1.5rem .5rem;
+}
+
+
+.moveGridBtn:hover {
+    filter: brightness(0) saturate(100%) invert(97%) sepia(30%) saturate(5368%) hue-rotate(308deg) brightness(98%) contrast(94%);
+}
+
+.moveGridBtn:first-child {
+    transform: rotate(-45deg);
+}
+
+.moveGridBtn:nth-child(3) {
+    transform: rotate(45deg);
+}
+
+.moveGridBtn:nth-child(4) {
+    transform: rotate(-90deg);
+}
+
+.moveGridBtn:nth-child(5) {
+    background-image: none;
+    cursor: default;
+}
+
+.moveGridBtn:nth-child(6) {
+    transform: rotate(90deg);
+}
+
+.moveGridBtn:nth-child(7) {
+    transform: rotate(-135deg);
+}
+
+.moveGridBtn:nth-child(8) {
+    transform: rotate(180deg);
+}
+
+.moveGridBtn:nth-child(9) {
+    transform: rotate(135deg);
+}
+
+.controls button:hover {
+    background-color: #F3B869;
+}
 
 
 .cell {
@@ -36,30 +126,36 @@ body {
     cursor: pointer;
 }
 
+.cell.grid {
+    background-color: rgba(240, 162, 60, 0.768);
+}
+
+
 .cell:first-child,
 .cell:nth-child(2),
-.cell:nth-child(3) {
+.cell:nth-child(3),
+.cell:nth-child(4),
+.cell:nth-child(5) {
     border-top: none;
 }
 
-.cell:nth-child(3n+1) {
+.cell:nth-child(5n+1) {
     border-left: none;
 }
 
-.cell:nth-child(3n+3) {
+.cell:nth-child(5n+5) {
     border-right: none;
 }
 
 .cell:last-child,
-.cell:nth-child(8),
-.cell:nth-child(7) {
+.cell:nth-child(24),
+.cell:nth-child(23),
+.cell:nth-child(22),
+.cell:nth-child(21) {
     border-bottom: none;
 }
 
-.cell.x,
-.cell.circle {
-    cursor: not-allowed;
-}
+
 
 .cell.x::before,
 .cell.x::after,
@@ -70,7 +166,7 @@ body {
 .board.x .cell:not(.x):not(.circle):hover::before,
 .board.x .cell:not(.x):not(.circle):hover::after,
 .board.circle .cell:not(.x):not(.circle):hover::before {
-    background-color: lightgray;
+    background-color: rgb(71, 71, 71);
 }
 
 
@@ -104,8 +200,6 @@ body {
 }
 
 
-
-
 .cell.circle::before,
 .board.circle .cell:not(.x):not(.circle):hover::before {
     width: var(--mark-size);
@@ -116,10 +210,15 @@ body {
 .board.circle .cell:not(.x):not(.circle):hover::after {
     width: calc(var(--mark-size) * .7);
     height: calc(var(--mark-size) * .7);
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 
-.winning-message{
+.cell.grid.circle::after,
+.board.circle .cell.grid:not(.x):not(.circle):hover::after {
+    background-color: #F3B869;
+}
+
+.winning-message {
     position: fixed;
     display: none;
     flex-direction: column;
@@ -134,7 +233,7 @@ body {
     font-size: 5rem;
 }
 
-.winning-message button{
+.winning-message button {
     font-size: 3rem;
     background-color: white;
     border: 1px solid black;
@@ -142,12 +241,12 @@ body {
     cursor: pointer;
 }
 
-.winning-message button:hover{
+.winning-message button:hover {
     background-color: black;
     color: white;
     border-color: white;
 }
 
-.winning-message.show{
+.winning-message.show {
     display: flex;
 }
