@@ -6,7 +6,6 @@ const board = UI.getInitialBoard();
 const message = MSG.getMessage();
 
 document.body.appendChild(board);
-
 document.body.appendChild(message);
 
 GB.createTicTacToeGame();

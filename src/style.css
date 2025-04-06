@@ -56,7 +56,7 @@ body {
     align-items: center;
     position: relative;
     cursor: pointer;
-    background-image: url("../caret-up-solid.svg");
+    background-image: url("caret-up-solid.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
